@@ -1,18 +1,23 @@
 #include "../include/BitcoinExchange.hpp"
 
-typedef double (*operators)(double, double);
+std::string trim(const std::string& str)
+{
+    std::string::const_iterator it = str.begin();
+    while (it != str.end() && std::isspace(*it)) {
+        ++it;
+    }
 
-inline double	sum(double a, double b) {return a + b;}
+    std::string::const_reverse_iterator rit = str.rbegin();
+    while (rit.base() != it && std::isspace(*rit)) {
+        ++rit;
+    }
 
-inline double	subtract(double a, double b) {return a - b;}
-
-inline double	multiply(double a, double b) {return a * b;}
-
-inline double	divide(double a, double b) {return a / b;}
+    return std::string(it, rit.base());
+}
 
 int main(int ac, char** av) {
 	std::cout.setf(std::ios::fixed);
-	std::cout.precision(20);
+	// std::cout.precision(5);
 	btc a("data.csv");
 	if (ac != 2)
 	{
@@ -47,8 +52,8 @@ int main(int ac, char** av) {
 		}
 		
 		//DATE
-		std::string date = line.substr(0, pipePos);
-		if (date < btcDate || date > a.getBiggestDate())
+		std::string date = trim(line.substr(0, pipePos));
+		if (date < btcDate)
 		{
 			std::cout << "Error: bad input => " << date << std::endl;
 			continue ;
@@ -67,13 +72,13 @@ int main(int ac, char** av) {
 			continue ;
 		}
 
-		// std::cout << "*" << a.getMap().find(date)->second << "*\n";
-		// double price = (a.getMap().find(date) != a.getMap().end()) ? a.getMap().find(date)->second : a.getBiggestSmall(date);
-		// if (price == 0 || amount == 0)
-		// 	std::cout << date << " => " << amount << " = " << price << std::endl;
-		// else if (INT32_MAX / price <= amount)
-		// 	std::cout << "Error: bad input => " << line;
-		// else
-		// 	std::cout << date << " => " << amount << " = " << amount * price << std::endl;
+		// std::cout << "*" << (a._prices.find(date) != a._prices.end()) << "*\n";
+		double price = (a._prices.find(date) != a._prices.end()) ? a._prices.find(date)->second : a.getBiggestSmall(date);
+		if (price == 0 || amount == 0)
+			std::cout << date << " => " << amount << " = " << price << std::endl;
+		else if (INT32_MAX / price <= amount)
+			std::cout << "Error: too large a number\n";
+		else
+			std::cout << date << " => " << amount << " = " << amount * price << std::endl;
 	}
 }

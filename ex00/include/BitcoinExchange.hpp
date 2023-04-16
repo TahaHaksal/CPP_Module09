@@ -20,10 +20,8 @@ class BitcoinExchange
         ~BitcoinExchange();
 
         btcMap      getMap();
-        void        setMap(btcMap map);
         double      getBiggestSmall(std::string val);
         std::string getBiggestDate ();
-    private:
         btcMap  _prices;
 
 };
