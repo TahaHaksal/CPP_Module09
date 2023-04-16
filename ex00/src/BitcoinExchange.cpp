@@ -40,7 +40,7 @@ btc::BitcoinExchange(std::string fileName)
             capitalize(value);
             if (date != "DATE" || value != "EXCHANGE_RATE")
             {
-                std::cerr << "Given files format isn't what is as expected: 'date|value'";
+                std::cerr << "Given files format isn't what is as expected: 'date|exchange_rate'";
                 exit(1);
             }
             firstLine = false;
@@ -56,8 +56,7 @@ btc::BitcoinExchange(std::string fileName)
         }
         _prices[date] = num;
     }
-    for (btcMap::iterator i = _prices.begin(); i != _prices.end(); i++)
-        std::cout << std::setprecision(20) << i->first << "---" << i->second << "\n";
+    for (btcMap::iterator it = )
 }
 
 btc::~BitcoinExchange()
@@ -80,8 +79,25 @@ void    btc::setMap(btcMap map)
  * @param val a date value pair
  * @return int returns the closest dates price value
  */
-int     btc::getBiggestSmall(btcMap val)
+double     btc::getBiggestSmall(std::string val)
 {
-    (void)val;
-    return 0;
+    std::string tmp = "";
+    for (btcMap::iterator it = _prices.begin(); it != _prices.end(); it++)
+    {
+        if (it->first < val && (tmp == "" || tmp < it->first))
+            tmp = it->first;
+    }
+    double closestPrice = (_prices.find(tmp) != _prices.end()) ? _prices[tmp] : 0.0;
+    return closestPrice;
+}
+
+std::string btc::getBiggestDate ()
+{
+    std::string tmp = "";
+    for (btcMap::iterator it = _prices.begin(); it != _prices.end(); it++)
+    {
+        if (it->first > tmp)
+            tmp = it->first;
+    }
+    return tmp;
 }
