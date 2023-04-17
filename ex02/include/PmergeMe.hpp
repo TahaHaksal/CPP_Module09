@@ -1,15 +1,27 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <list>
+#include <ctime>
+#include <random>
+#include <math.h>
+#include <cstdlib>
 
-typedef class PmergeMe pm;
+typedef std::list<int> intList;
+
+typedef std::vector<int> intVec;
 
 class PmergeMe
 {
     public:
-        template<typename T>
-        PmergeMe(T& container);
+        PmergeMe(intVec container);
+        PmergeMe(intList container);
         ~PmergeMe();
-        void   sort(std::vector<int>& container, size_t left, size_t right);
-        void   sort(std::list<int>& container, size_t left, size_t right);
+        PmergeMe(const PmergeMe& copy);
+        PmergeMe& operator=(const PmergeMe& copy);
+    private:
+        void    sort(intVec& v, int start, int end);
+        void    sort(intList& lst, intList::iterator start, intList::iterator end);
+        intVec    _vecContainer;
+        intList      _listContainer;
 };

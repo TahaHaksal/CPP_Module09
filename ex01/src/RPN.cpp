@@ -22,6 +22,17 @@ RPN::RPN(char *line)
 
 }
 
+RPN::RPN(const RPN& copy)
+{
+    trimmedLine = copy.trimmedLine;
+}
+
+RPN& RPN::operator=(const RPN& copy)
+{
+    trimmedLine = copy.trimmedLine;
+    return *this;
+}
+
 int RPN::computeRPN()
 {
     for (size_t i = 0; i < trimmedLine.size(); i++)

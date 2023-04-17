@@ -18,6 +18,8 @@ class RPN
     public:
         RPN(char *line);
         ~RPN();
+        RPN(const RPN& copy);
+        RPN& operator=(const RPN& copy);
 
         int computeRPN();
         operations findOp(char c);

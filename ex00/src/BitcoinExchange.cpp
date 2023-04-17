@@ -97,3 +97,14 @@ std::string btc::getBiggestDate ()
     }
     return tmp;
 }
+
+btc::BitcoinExchange(const BitcoinExchange& copy)
+{
+    _prices = copy._prices;
+}
+
+BitcoinExchange& btc::operator=(const BitcoinExchange& copy)
+{
+    _prices = copy._prices;
+    return *this;
+}

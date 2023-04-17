@@ -18,6 +18,8 @@ class BitcoinExchange
     public:
         BitcoinExchange(std::string fileName);
         ~BitcoinExchange();
+        BitcoinExchange(const BitcoinExchange& copy);
+        BitcoinExchange& operator=(const BitcoinExchange& copy);
 
         btcMap      getMap();
         double      getBiggestSmall(std::string val);
